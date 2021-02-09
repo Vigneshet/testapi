@@ -33,5 +33,8 @@ public class ApiTestService {
 		return response.getBody();
 	}
 	
+	public int addApi(ApiDetails apiDetails) {
+		return dao.insertApi(apiDetails);
+	}
 	
 }

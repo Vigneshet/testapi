@@ -10,4 +10,6 @@ public interface ApiTestDao {
 	
 	public ApiDetails getApiDetail(String id);
 	
+	public int insertApi(ApiDetails apiDetails);
+	
 }

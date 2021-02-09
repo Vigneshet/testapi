@@ -1,5 +1,5 @@
 var ids = new Array();
-
+var xmlHttp = new XMLHttpRequest();
 function addIds(ths){
 	console.log(ths);
 	console.log(ths.parentElement.nextElementSibling.textContent);
@@ -17,7 +17,7 @@ function addIds(ths){
 }
 
 function runTest(){
-	 var xmlHttp = new XMLHttpRequest();
+	
         xmlHttp.onreadystatechange = function()
         {
             if(xmlHttp.readyState == 4 && xmlHttp.status == 200)

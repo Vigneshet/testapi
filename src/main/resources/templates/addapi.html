@@ -1,0 +1,15 @@
+<form action="#" th:action="@{/addapi}" th:object="${apiDetails}" method="post">
+    <label for="webservicename">Web Service Name</label>
+    <input type="text" th:field="*{webServiceName}" id="webservicename" placeholder="Web Service Name">
+    <br>
+    <label for="webserviceurl">Web Service Url</label>
+    <input type="text" th:field="*{webServiceUrl}" id="webserviceurl" placeholder="Web Service Url">
+    <br>
+    <label for="username">User Name</label>
+    <input type="text" th:field="*{username}" id="username" placeholder="User Name">
+    <br>
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="Password">
+    <br>
+    <input type="submit" value="Add User">   
+</form>

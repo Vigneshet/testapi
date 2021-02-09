@@ -28,4 +28,10 @@ public class ApiTestDaoImpl implements ApiTestDao {
 				new BeanPropertyRowMapper<>(ApiDetails.class));
 	}
 
+	@Override
+	public int insertApi(ApiDetails apiDetails) {
+		return template.update(ApiTestConstants.INSERT_API_DETAILS, new Object[] { apiDetails.getWebServiceName(),
+				apiDetails.getWebServiceUrl(), apiDetails.getUsername(), apiDetails.getPassword() });
+	}
+
 }
