@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset = "ISO-8859-1" />
+      <link href = "css/styles.css" rel = "stylesheet"/>
+      <title>API Test Application</title>
+   </head>
+   <body>
+<div th:switch="${apis}">
+    <h2 th:case="null">No users yet!</h2>
+        <div th:case="*">
+            <h2>APIs</h2>
+            <table>
+                <thead>
+                    <tr>
+						<th>Select</th>
+                        <th>ID</th>
+                        <th>Web Service Name</th>
+                        <th>Web Service Url</th>
+                        <th>UserName</th>
+						<th>Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="api : ${apis}">
+					<td><input type="checkbox" name="select" th:checked="${api.selected}" /></td>
+                    <td th:text="${api.id}"></td>
+                    <td th:text="${api.webServiceName}"></td>
+                    <td th:text="${api.webServiceUrl}"></td>
+					<td th:text="${api.username}"></td>
+					<td th:text="${api.password}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>      
+    <pre><a href="/signup">Run</a>            <a href="/signup">Add a new api</a></pre>
+</div>
+</body>
+</html>
