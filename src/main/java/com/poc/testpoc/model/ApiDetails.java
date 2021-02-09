@@ -2,6 +2,11 @@ package com.poc.testpoc.model;
 
 public class ApiDetails {
 
+	@Override
+	public String toString() {
+		return this.id + " -- " + this.webServiceName;
+	}
+
 	private int id;
 	
 	private String webServiceName;

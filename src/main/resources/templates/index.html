@@ -3,13 +3,15 @@
    <head>
       <meta charset = "ISO-8859-1" />
       <link href = "css/styles.css" rel = "stylesheet"/>
+	  <script type="text/javascript" src="script/script.js"></script>
       <title>API Test Application</title>
    </head>
    <body>
 <div th:switch="${apis}">
-    <h2 th:case="null">No users yet!</h2>
+    <h2 th:case="null">No apis yet!</h2>
         <div th:case="*">
             <h2>APIs</h2>
+			<span id="testResult" style="display:none">Test Ran Successfully</span><br>
             <table>
                 <thead>
                     <tr>
@@ -23,7 +25,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="api : ${apis}">
-					<td><input type="checkbox" name="select" th:checked="${api.selected}" /></td>
+					<td><input type="checkbox" name="select" id="selctbox" th:onclick="addIds(this)" th:checked="${api.selected}" /></td>
                     <td th:text="${api.id}"></td>
                     <td th:text="${api.webServiceName}"></td>
                     <td th:text="${api.webServiceUrl}"></td>
@@ -32,8 +34,11 @@
                 </tr>
             </tbody>
         </table>
-    </div>      
-    <pre><a href="/signup">Run</a>            <a href="/signup">Add a new api</a></pre>
+    </div> 
+<div style="padding-top: 15px;">	
+    <button class="button button2" th:onclick="runTest()">Run</button>
+	<button class="button button2">Add New API</button>
+	</div>
 </div>
 </body>
 </html>

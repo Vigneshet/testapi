@@ -8,4 +8,6 @@ public interface ApiTestDao {
 
 	public List<ApiDetails> getApiDetails();
 	
+	public ApiDetails getApiDetail(String id);
+	
 }
