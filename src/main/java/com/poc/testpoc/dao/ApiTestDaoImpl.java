@@ -36,25 +36,29 @@ public class ApiTestDaoImpl implements ApiTestDao {
 
 	@Override
 	public boolean isTableThere(String tableName) {
-		int count = 0;
 		try {
-			count = template.queryForObject(ApiTestConstants.SELECT_TABLE + tableName, Integer.class);	
+			template.queryForObject(ApiTestConstants.SELECT_TABLE + tableName, Integer.class);	
 		}catch(Exception e) {
 			//System.out.println(e.getMessage());
+			return false;
 		}
-		return count > 0 ? true : false;
+		return true ;
 	}
 
 	@Override
 	public void createTable(String sql) {
 		System.out.println("Inside create table :: " + sql);
 		template.execute(sql);
+		System.out.println("Table created");
 	}
 
 	@Override
-	public int insertRecord(String sql) {
-		System.out.println("inside insert");
-		return 0;
+	public void insertRecord(List<String> sqlList) {
+		System.out.println("inside insert query");
+		sqlList.forEach(sql->{
+			template.execute(sql);	
+		});
+		System.out.println("Insert Completed");
 	}
 
 }

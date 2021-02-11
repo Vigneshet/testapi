@@ -70,9 +70,42 @@ public class ApiTestService {
 		return sb1.toString();
 	}
 
-	public String buildInsertQuery(String tableName, String response) {
+	public List<String> buildInsertQuery(String tableName, String response) {
+		List<String> columnNames = fieldProcessor(response);
+		List<List<String>> columnValues = valueProcessor(response);
+		StringBuilder insertBase = getInsertStatement(tableName, columnNames);
+		List<String> insertQueries = new ArrayList<>();
+		columnValues.forEach(list -> {
+			StringBuilder result = new StringBuilder();
+			result.append(insertBase.toString());
+			list.forEach(item -> {
+				result.append("'");
+				result.append(item);
+				result.append("'");
+				result.append(",");
+			});
+			StringBuilder output = new StringBuilder(result.substring(0, result.length() - 1));
+			output.append(")");
+			System.out.println("insert query ::: " + output.toString());
+			insertQueries.add(output.toString());
+		});
+		return insertQueries;
+	}
 
-		return null;
+	public StringBuilder getInsertStatement(String tableName, List<String> columnNames) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("insert into ");
+		sb.append(tableName);
+		sb.append("(");
+		if (columnNames == null || columnNames.size() == 0)
+			return null;
+		columnNames.forEach(column -> {
+			sb.append(column);
+			sb.append(",");
+		});
+		StringBuilder sb1 = new StringBuilder(sb.substring(0, sb.length() - 1));
+		sb1.append(") values (");
+		return sb1;
 	}
 
 	public List<String> fieldProcessor(String response) {
@@ -116,6 +149,40 @@ public class ApiTestService {
 					columnNames.add(entry.getKey());
 				else
 					columnNames.add(parent + "_" + entry.getKey());
+			}
+		}
+	}
+
+	public List<List<String>> valueProcessor(String response) {
+		List<List<String>> values = new ArrayList<>();
+		JsonParser parser = new JsonParser();
+		JsonElement element = parser.parse(response);
+		if (element.isJsonArray()) {
+			JsonArray jsonArr = element.getAsJsonArray();
+			for (int i = 0; i < jsonArr.size();i++) {
+				JsonObject obj = (JsonObject) jsonArr.get(i);
+				List<String> value = new ArrayList<>();
+				getValues(value, obj);
+				values.add(value);
+			}
+		} else if (element.isJsonObject()) {
+			List<String> value = new ArrayList<>();
+			getValues(value, element.getAsJsonObject());
+			values.add(value);
+		}
+		return values;
+	}
+
+	public void getValues(List<String> valueList, JsonObject obj) {
+		Set<Map.Entry<String, JsonElement>> entrySet = obj.entrySet();
+		for (Map.Entry<String, JsonElement> entry : entrySet) {
+			if (obj.get(entry.getKey()).isJsonArray()) {
+				JsonArray jsonArr = obj.get(entry.getKey()).getAsJsonArray();
+				getValues(valueList, jsonArr.get(0).getAsJsonObject());
+			} else if (obj.get(entry.getKey()).isJsonObject()) {
+				getValues(valueList, obj.get(entry.getKey()).getAsJsonObject());
+			} else {
+				valueList.add(obj.get(entry.getKey()).getAsString());
 			}
 		}
 	}

@@ -16,6 +16,6 @@ public interface ApiTestDao {
 	
 	public void createTable(String sql);
 	
-	public int insertRecord(String sql);
+	public void insertRecord(List<String> sql);
 	
 }
