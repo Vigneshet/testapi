@@ -34,4 +34,27 @@ public class ApiTestDaoImpl implements ApiTestDao {
 				apiDetails.getWebServiceUrl(), apiDetails.getUsername(), apiDetails.getPassword() });
 	}
 
+	@Override
+	public boolean isTableThere(String tableName) {
+		int count = 0;
+		try {
+			count = template.queryForObject(ApiTestConstants.SELECT_TABLE + tableName, Integer.class);	
+		}catch(Exception e) {
+			//System.out.println(e.getMessage());
+		}
+		return count > 0 ? true : false;
+	}
+
+	@Override
+	public void createTable(String sql) {
+		System.out.println("Inside create table :: " + sql);
+		template.execute(sql);
+	}
+
+	@Override
+	public int insertRecord(String sql) {
+		System.out.println("inside insert");
+		return 0;
+	}
+
 }

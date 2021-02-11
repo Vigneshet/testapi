@@ -12,4 +12,10 @@ public interface ApiTestDao {
 	
 	public int insertApi(ApiDetails apiDetails);
 	
+	public boolean isTableThere(String tableName);
+	
+	public void createTable(String sql);
+	
+	public int insertRecord(String sql);
+	
 }
